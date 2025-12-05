@@ -7,29 +7,29 @@ void readPGMImage(struct pgm *pio, char *filename)
 	FILE *fp;
 	char ch;
 
-	if (!(fp = fopen(filename,"r")))
+	if (!(fp = fopen(filename, "rb")))
     {
-		perror("Erro.");
+		perror("\nErro.\n");
 		exit(1);
 	}
 
 	if ((ch = getc(fp)) != 'P')
     {
-		puts("A imagem fornecida não está no formato pgm");
+		puts("\nA imagem fornecida não está no formato pgm.");
 		exit(2);
 	}
 	
-	pio->tipo = getc(fp)-48;
+	pio->tipo = getc(fp) - 48;
 	
-	fseek(fp,1, SEEK_CUR);
+	fseek(fp, 1, SEEK_CUR);
 
 	while((ch = getc(fp)) == '#')
     {
 		while((ch = getc(fp)) != '\n');
 	}
 
-	fseek(fp,-1, SEEK_CUR);
-	fscanf(fp, "%d %d",&pio->c,&pio->r);
+	fseek(fp, -1, SEEK_CUR);
+	fscanf(fp, "%d %d", &pio->c, &pio->r);
 
 	if (ferror(fp))
     { 
@@ -37,67 +37,95 @@ void readPGMImage(struct pgm *pio, char *filename)
 		exit(3);
 	}
 
-	fscanf(fp, "%d",&pio->mv);
-	fseek(fp,1, SEEK_CUR);
+	fscanf(fp, "%d", &pio->mv);
+	fseek(fp, 1, SEEK_CUR);
 
-	pio->pData = (unsigned char*) malloc(pio->r * pio->c * sizeof(unsigned char));
+	pio->pData = (unsigned char**) malloc(pio->r * sizeof(unsigned char *));
+
+    if (pio->pData == NULL)
+    {
+        perror("\nErro ao alocar memória.\n");
+        exit(4);
+    }
+
+    for (int i = 0; i < pio->r; i++)
+    {
+        *(pio->pData+i) = (unsigned char *) malloc(pio->c * sizeof(unsigned char));
+
+        if (*(pio->pData+i) == NULL)
+        {
+            perror("\nErro ao alocar memória.\n");
+            exit(5);
+        }
+    }
 
 	switch(pio->tipo)
     {
-		case 2:
-			puts("Lendo imagem PGM (dados em texto):");
+        case 2:
+            puts("\nLendo imagem PGM (dados em texto):");
 
-			for (int k=0; k < (pio->r * pio->c); k++)
+            for (int i = 0; i < pio->r; i++)
             {
-				fscanf(fp, "%hhu", pio->pData+k);
-			}
+                for (int j = 0; j < pio->c; j++)
+                {
+                    fscanf(fp, "%hhu", &pio->pData[i][j]);
+                }
+            }
 
-		    break;
-		case 5:
-			puts("Lendo imagem PGM (dados em binário):");
+            break;
+        case 5:
+            puts("\nLendo imagem PGM (dados em binário):");
 
-			fread(pio->pData,sizeof(unsigned char),pio->r * pio->c, fp);
+            for (int i = 0; i < pio->r; i++)
+            {
+                fread(pio->pData[i], sizeof(unsigned char), pio->c, fp);
+            }
 
-		    break;
-		default:
-			puts("Não está implementado");
-	}
-	
-	fclose(fp);
+            break;
+        default:
+            puts("\nNão está implementado.");
+    }
+    
+    fclose(fp);
 }
 
 void writePGMImage(struct pgm *pio, char *filename)
 {
-	FILE *fp;
-	char ch;
+    FILE *fp;
 
-	if (!(fp = fopen(filename,"wb")))
+    if (!(fp = fopen(filename, "wb")))
     {
-		perror("Erro.");
-		exit(1);
-	}
+        perror("\nErro.\n");
+        exit(1);
+    }
 
-	fprintf(fp, "%s\n", "P5");
-	fprintf(fp, "%d %d\n", pio->c, pio->r);
-	fprintf(fp, "%d\n", 255);
+    fprintf(fp, "P5\n");
+    fprintf(fp, "%d %d\n", pio->c, pio->r);
+    fprintf(fp, "%d\n", 255);
 
-	fwrite(pio->pData, sizeof(unsigned char), pio->c * pio->r, fp);
+    for (int i = 0; i < pio->r; i++)
+    {
+        fwrite(pio->pData[i], sizeof(unsigned char), pio->c, fp);
+    }
 
-	fclose(fp);
+    fclose(fp);
 }
 
 void viewPGMImage(struct pgm *pio)
 {
-	printf("Tipo: %d\n", pio->tipo);
-	printf("Dimensões: [%d %d]\n", pio->c, pio->r);
-	printf("Max: %d\n", pio->mv);
+    printf("Tipo: %d\n", pio->tipo);
+    printf("Dimensões: [%d %d]\n", pio->c, pio->r);
+    printf("Max: %d\n", pio->mv);
 
-	for (int k=0; k < (pio->r * pio->c); k++)
+    for (int i = 0; i < pio->r; i++)
     {
-		if (!(k % pio->c)) printf("\n");
+        for (int j = 0; j < pio->c; j++)
+        {
+            printf("%2hhu ", pio->pData[i][j]);
+        }
 
-		printf("%2hhu ", *(pio->pData+k));
-	}
+        printf("\n");
+    }
     
-	printf("\n");
+    printf("\n");
 }

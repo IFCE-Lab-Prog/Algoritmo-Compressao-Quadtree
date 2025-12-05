@@ -4,7 +4,7 @@ struct pgm
 	int c;
 	int r;
 	int mv;
-	unsigned char *pData;
+	unsigned char **pData;
 };
 
 void readPGMImage(struct pgm *, char *);
