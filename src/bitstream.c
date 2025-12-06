@@ -39,7 +39,7 @@ void fecharBitstream(struct bitstream *bs)
 {
     if (bs->count > 0)
     {
-        bs->count <<= (8 - bs->count);
+        bs->buffer <<= (8 - bs->count);
 
         fwrite(&bs->buffer, sizeof(unsigned char), 1, bs->arquivo);
     }

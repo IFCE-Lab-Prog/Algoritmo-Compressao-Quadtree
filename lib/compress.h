@@ -1,4 +1,6 @@
 #include "./pgm.h"
 #include "./bitstream.h"
 
-void comprimir(struct pgm *, int, int, int, struct bitstream *);
+#define LIMIAR 10.0
+
+void codificador_quadtree(unsigned char **, int, int, int, struct bitstream *);

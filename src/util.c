@@ -11,7 +11,7 @@ double calcular_media(unsigned char **image, int x, int y, int size)
     {
         for (j = 0; j < size; j++)
         {
-            soma += image[y + i][x + j];
+            soma += image[x + i][y + j];
         }
     }
 
@@ -29,7 +29,7 @@ double calcular_desvio_padrao(unsigned char **image, int x, int y, int size)
     {
         for (j = 0; j < size; j++)
         {
-            variancia += pow(((double) image[y + i][x + j]) - media, 2);
+            variancia += pow(((double) image[x + i][y + j]) - media, 2);
         }
     }
 
