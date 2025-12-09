@@ -4,8 +4,8 @@
 struct binHeader
 {
     char assinatura[2];
-    unsigned short c;
-    unsigned short r;
+    int c;
+    int r;
     unsigned char mv;
 };
 
