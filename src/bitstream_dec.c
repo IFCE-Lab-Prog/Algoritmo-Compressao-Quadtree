@@ -1,3 +1,11 @@
+/***************************************************/
+/* Aluno: Luiza Mel de Araujo Sobrinho */
+/* Matrícula: 20251045050283 ∗/
+/∗ Avaliação 04: Trabalho Final ∗/
+/∗ 04.505.23 − 2025.2 − Prof. Daniel Ferreira ∗/
+/∗ Compilador: gcc versão 13.3.0 ∗/
+/***************************************************/
+
 #include "../lib/bitstream_dec.h"
 
 BitStreamDec *bsd_create(FILE *f) {

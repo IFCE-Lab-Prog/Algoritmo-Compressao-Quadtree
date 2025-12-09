@@ -1,3 +1,11 @@
+/***************************************************/
+/* Aluno: Maria Gabriele da Silva Dantas */
+/* Matrícula: 20251045050305 ∗/
+/∗ Avaliação 04: Trabalho Final ∗/
+/∗ 04.505.23 − 2025.2 − Prof. Daniel Ferreira ∗/
+/∗ Compilador: gcc versão 13.3.0 ∗/
+/***************************************************/
+
 #include <math.h>
 #include "../lib/util.h"
 

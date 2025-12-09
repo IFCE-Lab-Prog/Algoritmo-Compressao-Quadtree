@@ -1,3 +1,11 @@
+/***************************************************/
+/* Aluno: Daniel Freitas da Silva */
+/* Matrícula: 20251045050593 ∗/
+/∗ Avaliação 04: Trabalho Final ∗/
+/∗ 04.505.23 − 2025.2 − Prof. Daniel Ferreira ∗/
+/∗ Compilador: gcc versão 13.3.0 ∗/
+/***************************************************/
+
 #include "../lib/bitstream.h"
 
 void iniciarBitstream(struct bitstream *bs, FILE *f)
