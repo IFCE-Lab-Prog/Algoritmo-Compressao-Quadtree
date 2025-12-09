@@ -1,4 +1,4 @@
 #include "./pgm.h"
 #include "./bitstream.h"
 
-void comprimir(struct pgm *, int, int, int, struct bitstream *);
+void codificador_quadtree(unsigned char **, int, int, int, struct bitstream *);

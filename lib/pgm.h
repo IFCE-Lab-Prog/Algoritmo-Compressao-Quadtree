@@ -1,3 +1,6 @@
+#ifndef LIB_PGM_H
+#define LIB_PGM_H
+
 struct pgm
 {
 	int tipo;
@@ -10,3 +13,5 @@ struct pgm
 void readPGMImage(struct pgm *, char *);
 void viewPGMImage(struct pgm *);
 void writePGMImage(struct pgm *, char *);
+
+#endif
