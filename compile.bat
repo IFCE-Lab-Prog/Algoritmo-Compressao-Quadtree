@@ -1,11 +1,10 @@
 gcc -c pgm/pgm.c
-gcc -c src/binHeader.c
 gcc -c src/bitstream.c
 gcc -c src/compress.c
 gcc -c src/util.c
 gcc -c src/encoder.c
 
-gcc -o encoder.exe encoder.o binHeader.o bitstream.o compress.o util.o pgm.o -lm
+gcc -o encoder.exe encoder.o bitstream.o compress.o util.o pgm.o -lm
 
 gcc -c src/decoder.c
 gcc -c src/bitstream_dec.c

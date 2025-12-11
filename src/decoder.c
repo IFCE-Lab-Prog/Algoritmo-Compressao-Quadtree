@@ -23,31 +23,9 @@ int main(int argc, char **argv) {
         return 1;
     }
 
-    char assinatura[3];
-    int width, height, max_val;
+    unsigned short int size;
 
-    fscanf(fbin, "%2c", assinatura);
-
-    fscanf(fbin, "%d %d", &width, &height);
-    fscanf(fbin, "%d", &max_val);
-
-    int c;
-    
-    while (1)
-    {
-        c = fgetc(fbin);
-        
-        if (c == EOF) return 1;
-        
-        if (c == ' ' || c == '\n' || c == '\r' || c == '\t')
-        {
-            continue;
-        }
-
-        break;
-    }
-
-    ungetc(c, fbin);
+    fread(&size, sizeof(unsigned short int), 1, fbin);
 
     BitStreamDec *bs = bsd_create(fbin);
     if (!bs) {
@@ -55,7 +33,7 @@ int main(int argc, char **argv) {
         return 1;
     }
 
-    PGMDecImage *img = pgm_dec_create(width);
+    PGMDecImage *img = pgm_dec_create(size);
     if (!img) {
         bsd_close(bs);
         fclose(fbin);

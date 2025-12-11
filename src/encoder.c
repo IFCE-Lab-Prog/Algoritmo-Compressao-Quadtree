@@ -9,7 +9,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../lib/compress.h"
-#include "../lib/binHeader.h"
 
 int main(int argc, char *argv[])
 {
@@ -31,9 +30,9 @@ int main(int argc, char *argv[])
 		exit(2);
     }
 
-    struct binHeader bh;
+    unsigned short int size = (unsigned short int)(img.r);
 
-    writeBINHeader(&img, &bh, arquivoSaida);
+    fwrite(&size, sizeof(unsigned short int), 1, arquivoSaida);
 
     struct bitstream bs;
 

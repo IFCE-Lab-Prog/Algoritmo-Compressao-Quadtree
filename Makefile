@@ -1,16 +1,13 @@
 all: encoder.e decoder.e
 
-encoder.e: encoder.o pgm.o binHeader.o bitstream.o compress.o util.o
-	gcc -o encoder.e encoder.o binHeader.o bitstream.o compress.o util.o pgm.o -lm
+encoder.e: encoder.o pgm.o bitstream.o compress.o util.o
+	gcc -o encoder.e encoder.o bitstream.o compress.o util.o pgm.o -lm
 
 encoder.o: src/encoder.c
 	gcc -c src/encoder.c
 
 pgm.o: pgm/pgm.c
 	gcc -c pgm/pgm.c
-
-binHeader.o: src/binHeader.c
-	gcc -c src/binHeader.c
 
 bitstream.o: src/bitstream.c
 	gcc -c src/bitstream.c
